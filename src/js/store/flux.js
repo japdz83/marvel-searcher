@@ -1,6 +1,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
+	const baseUrl = "http://gateway.marvel.com/v1/public/";
 	return {
 		store: {
+			person: [],
 			demo: [
 				{
 					title: "FIRST",
@@ -15,6 +17,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+			getPerson: async () => {
+				const response = await fetch(`${baseUrl}characters/`);
+				const data = await response.json();
+				setStore({ person: data.results });
+			},
+
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
